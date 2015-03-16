@@ -1,0 +1,48 @@
+﻿@model List<listaFeed.Models.Feed>
+    
+@{
+        ViewBag.Title = "Feeds Minuto";
+        WebGrid grdFeed = new WebGrid(Model);
+ }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Feed</title>
+    </head>
+    <body>
+        <div>
+            <table>
+                <tr>
+                    <th>
+                        Titulo
+                    </th>
+                    <th>
+                        Link
+                    </th>
+                    <th>
+                        Resumo
+                    </th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td id="titulo">
+                            @Html.Label(item.Titulo)
+                        </td>
+                        <td>
+                            @Html.ActionLink(item.Link.ToString(), "paginaMinuto")
+                        </td>
+                        <td>
+                            <div>
+                                @Html.ValueForModel(item.Resumo).ToHtmlString()
+                            </div>
+                        </td>
+                    </tr>
+                }               
+            </table>
+        </div>
+    </body>
+</html>

@@ -37,7 +37,7 @@
                         </td>
                         <td>
                             <div>
-                                @Html.ValueForModel(item.Resumo).ToHtmlString()
+                                @Html.Raw(item.Resumo)
                             </div>
                         </td>
                     </tr>

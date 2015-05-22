@@ -10,7 +10,7 @@ namespace listaFeed.Models
     public class Feed
     {
         string titulo;
-        string resumo;
+        IHtmlString resumo;
         int numeroPalavras;
         Uri link;
 
@@ -32,7 +32,7 @@ namespace listaFeed.Models
             set { link = value; }
         }
 
-        public string Resumo
+        public IHtmlString Resumo
         {
             get { return resumo; }
             set { resumo = value; }

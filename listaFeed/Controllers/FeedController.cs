@@ -6,6 +6,8 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml;
 using listaFeed.Models;
+using System.Text;
+using System.Xml.Linq;
 
 namespace listaFeed.Controllers
 {
@@ -18,9 +20,12 @@ namespace listaFeed.Controllers
 
             foreach (SyndicationItem item in feedItens)
             {
+                
                 Feed feed = new Feed();
                 feed.Titulo = item.Title.Text;
-                feed.Resumo = item.Summary.Text;
+                //int index = item.Summary.Text.IndexOf("&");
+                //HtmlString resumo = item.Summary.Text;//.Remove(index);
+                feed.Resumo = new HtmlString(item.Summary.Text);// resumo;
                 feed.Link = item.Links[0].Uri;
 
                 feeds.Add(feed);
@@ -32,8 +37,22 @@ namespace listaFeed.Controllers
         public List<SyndicationItem> readFeed(string urlBlogMinuto)
         {
             XmlReader readFeed = XmlReader.Create(urlBlogMinuto);
+
+            readFeed.MoveToContent();
+            while (readFeed.Read())
+            {
+                if (readFeed.NodeType == XmlNodeType.Element)
+                {
+                    XElement el = XNode.ReadFrom(readFeed) as XElement;
+                  
+                }
+                
+            }
+
             SyndicationFeed feed = SyndicationFeed.Load(readFeed);
+
             IEnumerable<SyndicationItem> feedItens = feed.Items;
+            
             feedItens.Skip(10);
 
             return feedItens.ToList();
